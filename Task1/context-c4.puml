@@ -11,6 +11,9 @@ System_Boundary(CompanySystem, "ИТ система компании «Буду�
     Container(UiEmployee, "Витрина Данных. Портал самообслуживания", "React/TypeScript", "Веб-портал для аналитики и отчетов")
     Container(AiServices, "AI сервисы", "AI", "AI сервисы на Python")
     Container(Kafka, "Шина событий", "Kafka", "Асинхронное взаимодействие сервисов")
+    Container(Airflow, "Оркестрация ETL", "Airflow", "Управление пайплайнами и расписаниями")
+    Container(Spark, "Пакетная обработка", "Apache Spark", "ETL для больших данных")
+
     System_Boundary(DataLakehouse, "Data Lakehouse") {
         Container(ApacheIceberg, "Apache Iceberg", "Apache Iceberg", "Взаимодействие с таблицами")
         Container(Nessie, "Nessie", "Nessie", "Каталог хранения указателей на актуальные файлы метаданных")
@@ -22,4 +25,8 @@ Rel(Employee, UiEmployee, "Взаимодействие с порталом са
 Rel(UiEmployee, DataLakehouse, "Работа с данными", "HTTPS")
 Rel(UiEmployee, Kafka, "Асинхронные задачи через шину событий", "HTTPS")
 Rel(AiServices, Kafka, "Асинхронное взаимодействие через шину событий", "HTTPS")
+Rel(AiServices, DataLakehouse, "Работа с данными", "HTTPS")
+Rel(Airflow, Kafka, "Асинхронное взаимодействие через шину событий", "Kafka API")
+Rel(Airflow, Spark, "Запуск Spark-джобов", "Spark API")
+Rel(Spark, DataLakehouse, "Загрузка данных", "HTTPS")
 @enduml
