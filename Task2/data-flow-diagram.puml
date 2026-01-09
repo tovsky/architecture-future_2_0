@@ -1,0 +1,24 @@
+@startuml
+left to right direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
+
+title ИТ система компании «Будущее 2.0» через год
+
+System_Boundary(CompanySystem, "Потоки данных в ИТ системе компании «Будущее 2.0»") {
+    System(Medical, "Медицинский домен")
+    System(Fintech, "Финтех-домен")
+    System(Analytics, "Аналитический домен")
+    System(AI, "AI-домен")
+    System(ClientPortal, "Клиентский домен")
+    System(AdminPortal, "Портал админинстрирования")
+    System(DataLakeHouse, "DataLakeHouse")
+}
+
+Rel(Medical, DataLakeHouse, "Сохранение данных через шину событий", "TCP")
+Rel(Fintech, DataLakeHouse, "Сохранение данных через шину событий", "TCP")
+Rel(Analytics, DataLakeHouse, "Генерация отчетов", "TCP")
+Rel(AI, DataLakeHouse, "Обучение моделей и другие AI сервисы", "HTTP")
+Rel(ClientPortal, Medical, "Просмотр медкарты и анализов", "HTTP")
+Rel(ClientPortal, Fintech, "Оплаты и просмотр истории операций", "HTTP")
+@enduml
